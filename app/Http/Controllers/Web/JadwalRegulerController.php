@@ -116,7 +116,7 @@ class JadwalRegulerController extends BaseController
         JadwalReguler::create([
             'nama_reguler' => $validated['nama_reguler'],
             'id_room' => $validated['id_room'],
-            'id_user' => Auth::user()->id_user,
+            'id_user' => Auth::user()->id,
             'tanggal_mulai' => $validated['tanggal_mulai'],
             'tanggal_selesai' => $validated['tanggal_selesai'],
             'keterangan' => $validated['keterangan'] ?? '',

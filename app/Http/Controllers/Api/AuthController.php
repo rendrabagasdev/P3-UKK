@@ -184,7 +184,7 @@ class AuthController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'username' => 'required|string|unique:user,username,' . $request->user()->id_user . ',id_user',
+                'username' => 'required|string|unique:users,username,' . $request->user()->id . ',id',
             ]);
 
             if ($validator->fails()) {

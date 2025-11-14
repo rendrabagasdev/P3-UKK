@@ -56,7 +56,7 @@ class DatabaseSeeder extends Seeder
 
         // Create Petugas record if not exists
         $petugas = Petugas::firstOrCreate(
-            ['id_user' => $petugasUser->id_user],
+            ['id_user' => $petugasUser->id],
             [
                 'nama_petugas' => 'Petugas Satu',
                 'no_hp' => '08123456789',
@@ -95,7 +95,7 @@ class DatabaseSeeder extends Seeder
         JadwalReguler::create([
             'nama_reguler' => 'Meeting Mingguan Tim IT',
             'id_room' => $room1->id_room,
-            'id_user' => $adminUser->id_user,
+            'id_user' => $adminUser->id,
             'tanggal_mulai' => '2023-09-10',
             'tanggal_selesai' => '2023-09-10',
             'keterangan' => 'Meeting mingguan tim IT yang diadakan setiap hari Senin.',
@@ -103,7 +103,7 @@ class DatabaseSeeder extends Seeder
 
         // Create Bookings
         Booking::create([
-            'id_user' => $regularUser->id_user,
+            'id_user' => $regularUser->id,
             'id_petugas' => $petugas->id_petugas,
             'id_room' => $room2->id_room,
             'tanggal_mulai' => '2023-09-15',

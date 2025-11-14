@@ -22,7 +22,7 @@ class CreateJadwalRegulerTable extends Migration
             $table->date('tanggal_selesai');
             $table->text('keterangan');
             $table->foreign('id_room')->references('id_room')->on('room')->onDelete('cascade');
-            $table->foreign('id_user')->references('id_user')->on('user')->onDelete('cascade');
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

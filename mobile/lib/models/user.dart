@@ -15,7 +15,7 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      idUser: json['id_user'] ?? 0,
+      idUser: json['id'] ?? 0, // Changed from 'id_user' to 'id'
       username: json['username'] ?? '',
       role: json['role'] ?? 0,
       createdAt: json['created_at'],
@@ -25,7 +25,7 @@ class User {
 
   Map<String, dynamic> toJson() {
     return {
-      'id_user': idUser,
+      'id': idUser, // Changed from 'id_user' to 'id'
       'username': username,
       'role': role,
       'created_at': createdAt,

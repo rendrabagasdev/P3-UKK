@@ -107,14 +107,14 @@
                             <div class="flex gap-2">
                                 @if($user->role != 1)
                                     <!-- Tombol Ubah hanya untuk User dan Petugas -->
-                                    <a href="{{ route('users.edit', $user->id_user) }}" 
+                                    <a href="{{ route('users.edit', $user->id) }}" 
                                        class="inline-flex items-center px-4 py-2 gradient-bg hover:shadow-xl text-white rounded-xl transition-all duration-300 font-bold transform hover:scale-105">
                                         <i class="fas fa-edit mr-1"></i>
                                         Ubah
                                     </a>
                                     
                                     <!-- Tombol Hapus hanya untuk User dan Petugas -->
-                                    <form action="{{ route('users.destroy', $user->id_user) }}" 
+                                    <form action="{{ route('users.destroy', $user->id) }}" 
                                           method="POST" 
                                           onsubmit="return confirm('Yakin ingin menghapus pengguna ini?')" 
                                           class="inline">

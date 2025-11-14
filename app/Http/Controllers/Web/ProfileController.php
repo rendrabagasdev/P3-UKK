@@ -33,7 +33,7 @@ class ProfileController extends Controller
             'email' => [
                 'required',
                 'email',
-                Rule::unique('user', 'email')->ignore($user->id_user, 'id_user'),
+                Rule::unique('user', 'email')->ignore($user->id, 'id_user'),
             ],
         ]);
         
@@ -44,7 +44,7 @@ class ProfileController extends Controller
         
         // Update nama di tabel petugas jika pengguna adalah petugas
         if ($user->role == 2) {
-            $petugas = Petugas::where('id_user', $user->id_user)->first();
+            $petugas = Petugas::where('id_user', $user->id)->first();
             if ($petugas) {
                 $petugas->name = $request->name;
                 $petugas->save();
@@ -93,7 +93,7 @@ class ProfileController extends Controller
             'no_hp' => 'required|string|max:15',
         ]);
         
-        $petugas = Petugas::where('id_user', $user->id_user)->first();
+        $petugas = Petugas::where('id_user', $user->id)->first();
         
         if ($petugas) {
             $petugas->no_hp = $request->no_hp;

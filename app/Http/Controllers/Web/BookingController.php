@@ -18,7 +18,7 @@ class BookingController extends BaseController
      */
     protected function getCurrentPetugas()
     {
-        return Petugas::where('id_user', optional(Auth::user())->id_user)->first();
+        return Petugas::where('id_user', optional(Auth::user())->id)->first();
     }
 
     // Daftar peminjaman
@@ -132,7 +132,7 @@ class BookingController extends BaseController
         } else {
             // Admin dapat mengubah semua data
             $request->validate([
-                'id_user' => 'required|exists:user,id_user',
+                'id_user' => 'required|exists:users,id',
                 'id_petugas' => 'required|exists:petugas,id_petugas',
                 'id_room' => 'required|exists:room,id_room',
                 'tanggal_mulai' => 'required|date',
@@ -156,7 +156,7 @@ class BookingController extends BaseController
                 'keterangan.required' => 'Keterangan harus diisi',
             ]);
             
-            $booking->id_user = $request->id_user;
+            $booking->id = $request->id;
             $booking->id_petugas = $request->id_petugas;
             $booking->id_room = $request->id_room;
             $booking->tanggal_mulai = $request->tanggal_mulai;
@@ -209,7 +209,7 @@ class BookingController extends BaseController
         
         $booking->status = 'diterima';
         // Set petugas yang menyetujui bila tersedia
-        $petugas = Petugas::where('id_user', optional(Auth::user())->id_user)->first();
+        $petugas = Petugas::where('id_user', optional(Auth::user())->id)->first();
         if ($petugas) {
             $booking->id_petugas = $petugas->id_petugas;
         }

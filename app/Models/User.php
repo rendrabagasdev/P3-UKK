@@ -18,14 +18,13 @@ class User extends Authenticatable
      *
      * @var string
      */
-    protected $table = 'user';
+    protected $table = 'users';
 
     /**
-     * Kunci utama untuk model.
-     *
-     * @var string
+     * Kunci utama untuk model (default Laravel adalah 'id').
+     * Tidak perlu didefinisikan karena menggunakan default Laravel.
      */
-    protected $primaryKey = 'id_user';
+    // protected $primaryKey = 'id'; // Optional, Laravel default sudah 'id'
 
     /**
      * Atribut yang dapat diisi secara massal.

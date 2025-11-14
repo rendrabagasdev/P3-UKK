@@ -23,7 +23,7 @@
 
     <!-- Isi -->
         <div class="p-8">
-            <form action="{{ route('users.update', $user->id_user) }}" method="POST">
+            <form action="{{ route('users.update', $user->id) }}" method="POST">
                 @csrf
                 @method('PUT')
                 

@@ -30,7 +30,7 @@ class PetugasBookingController extends Controller
      */
     protected function getCurrentPetugas()
     {
-        return Petugas::where('id_user', optional(Auth::user())->id_user)->first();
+        return Petugas::where('id_user', optional(Auth::user())->id)->first();
     }
 
     /**
@@ -133,7 +133,7 @@ class PetugasBookingController extends Controller
             'alasan_tolak.required' => 'Alasan penolakan wajib diisi',
         ]);
 
-    $petugas = Petugas::where('id_user', optional(Auth::user())->id_user)->first();
+    $petugas = Petugas::where('id_user', optional(Auth::user())->id)->first();
         if (!$petugas) {
             return response()->json([
                 'success' => false,

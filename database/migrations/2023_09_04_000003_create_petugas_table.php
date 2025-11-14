@@ -17,7 +17,7 @@ class CreatePetugasTable extends Migration
             $table->id('id_petugas');
             $table->string('nama_petugas', 50);
             $table->unsignedBigInteger('id_user');
-            $table->foreign('id_user')->references('id_user')->on('user')->onDelete('cascade');
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

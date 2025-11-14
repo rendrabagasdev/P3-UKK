@@ -98,7 +98,7 @@ class UserController extends BaseController
         
         $petugas = null;
         if ($user->role == 2) {
-            $petugas = Petugas::where('id_user', $user->id_user)->first();
+            $petugas = Petugas::where('id_user', $user->id)->first();
         }
         
         return view('users.edit', compact('user', 'petugas'));
@@ -122,9 +122,9 @@ class UserController extends BaseController
         }
 
         $request->validate([
-            'username' => 'required|string|unique:user,username,' . $user->id_user . ',id_user',
+            'username' => 'required|string|unique:users,username,' . $user->id . ',id',
             'nama' => 'required|string|max:255',
-            'email' => 'nullable|email|unique:user,email,' . $user->id_user . ',id_user',
+            'email' => 'nullable|email|unique:users,email,' . $user->id . ',id',
             'no_telepon' => 'nullable|string|max:20',
             'alamat' => 'nullable|string',
             'role' => 'required|integer|in:1,2,3',
@@ -164,7 +164,7 @@ class UserController extends BaseController
         $user = User::findOrFail($id);
         
         // Mencegah menghapus diri sendiri
-    if ($user->id_user == optional(Auth::user())->id_user) {
+    if ($user->id == optional(Auth::user())->id) {
             return redirect()->route('users.index')
                 ->with('error', 'Anda tidak dapat menghapus akun Anda sendiri.');
         }
@@ -177,7 +177,7 @@ class UserController extends BaseController
 
         // Hapus data petugas jika user adalah petugas
         if ($user->role == 2) {
-            $petugas = Petugas::where('id_user', $user->id_user)->first();
+            $petugas = Petugas::where('id_user', $user->id)->first();
             if ($petugas) {
                 $petugas->delete();
             }

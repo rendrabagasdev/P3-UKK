@@ -46,8 +46,8 @@ class StaffController extends BaseController
         
         $validatedData = $request->validate([
             'nama_petugas' => 'required|string|max:255',
-            'username' => 'required|string|max:50|unique:user,username',
-            'email' => 'nullable|email|max:255|unique:user,email',
+            'username' => 'required|string|max:50|unique:users,username',
+            'email' => 'nullable|email|max:255|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
             'no_hp' => 'required|string|max:20',
         ]);
@@ -64,7 +64,7 @@ class StaffController extends BaseController
 
         // Buat data petugas
         Petugas::create([
-            'id_user'      => $user->id_user,
+            'id_user'      => $user->id,
             'nama_petugas' => $validatedData['nama_petugas'],
             'no_hp'        => $validatedData['no_hp'],
         ]);
@@ -95,7 +95,7 @@ class StaffController extends BaseController
         }
         
         $petugas = Petugas::findOrFail($id);
-        $user = User::findOrFail($petugas->id_user);
+        $user = User::findOrFail($petugas->id);
         
         $validatedData = $request->validate([
             'nama_petugas' => 'required|string|max:255',
@@ -103,12 +103,12 @@ class StaffController extends BaseController
                 'required',
                 'string',
                 'max:50',
-                Rule::unique('user', 'username')->ignore($user->id_user, 'id_user'),
+                Rule::unique('user', 'username')->ignore($user->id, 'id_user'),
             ],
             'email' => [
                 'nullable',
                 'email',
-                Rule::unique('user', 'email')->ignore($user->id_user, 'id_user'),
+                Rule::unique('user', 'email')->ignore($user->id, 'id_user'),
             ],
             'no_hp' => 'required|string|max:20',
         ]);
@@ -161,7 +161,7 @@ class StaffController extends BaseController
         }
         
         $petugas = Petugas::findOrFail($id);
-        $user = User::findOrFail($petugas->id_user);
+        $user = User::findOrFail($petugas->id);
         
         // Cek apakah petugas memiliki peminjaman yang ditangani
         $hasBookings = $petugas->bookings()->exists();

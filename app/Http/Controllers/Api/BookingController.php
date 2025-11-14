@@ -17,7 +17,7 @@ class BookingController extends Controller
     public function index(): JsonResponse
     {
         $user = Auth::user();
-        $bookings = Booking::where('id_user', $user->id_user)
+        $bookings = Booking::where('id_user', $user->id)
             ->with('room')
             ->get();
 
@@ -39,7 +39,7 @@ class BookingController extends Controller
             
             // Get authenticated user
             $user = Auth::user();
-            \Log::info('Authenticated user', ['user_id' => $user->id_user, 'username' => $user->username]);
+            \Log::info('Authenticated user', ['user_id' => $user->id, 'username' => $user->username]);
 
             $validator = \Validator::make($request->all(), [
                 'id_room' => 'required|integer|exists:room,id_room',
@@ -132,12 +132,12 @@ class BookingController extends Controller
                 $petugasUser = \App\Models\User::where('role', 2)->first();
                 if ($petugasUser) {
                     \Log::info('No Petugas found. Creating Petugas from existing user with role=2', [
-                        'user_id' => $petugasUser->id_user,
+                        'user_id' => $petugasUser->id,
                         'username' => $petugasUser->username,
                     ]);
                     $petugas = \App\Models\Petugas::create([
                         'nama_petugas' => $petugasUser->username,
-                        'id_user' => $petugasUser->id_user,
+                        'id_user' => $petugasUser->id,
                     ]);
                 }
             }
@@ -147,12 +147,12 @@ class BookingController extends Controller
                 $adminUser = \App\Models\User::where('role', 1)->first();
                 if ($adminUser) {
                     \Log::info('No Petugas with role=2. Creating Petugas from admin user as fallback', [
-                        'user_id' => $adminUser->id_user,
+                        'user_id' => $adminUser->id,
                         'username' => $adminUser->username,
                     ]);
                     $petugas = \App\Models\Petugas::create([
                         'nama_petugas' => $adminUser->username,
-                        'id_user' => $adminUser->id_user,
+                        'id_user' => $adminUser->id,
                     ]);
                 }
             }
@@ -166,7 +166,7 @@ class BookingController extends Controller
             }
 
             $booking = Booking::create([
-                'id_user' => $user->id_user,
+                'id_user' => $user->id,
                 'id_petugas' => $petugas->id_petugas, // Auto-assign ke petugas
                 'id_room' => $request->id_room,
                 'tipe_booking' => $request->tipe_booking,
@@ -213,7 +213,7 @@ class BookingController extends Controller
         $user = Auth::user();
         $booking = Booking::with('room')
             ->where('id_booking', $id)
-            ->where('id_user', $user->id_user)
+            ->where('id_user', $user->id)
             ->first();
 
         if (! $booking) {
@@ -239,7 +239,7 @@ class BookingController extends Controller
     {
         $user = Auth::user();
         $booking = Booking::where('id_booking', $id)
-            ->where('id_user', $user->id_user)
+            ->where('id_user', $user->id)
             ->first();
 
         if (! $booking) {
@@ -305,7 +305,7 @@ class BookingController extends Controller
     {
         $user = Auth::user();
         $booking = Booking::where('id_booking', $id)
-            ->where('id_user', $user->id_user)
+            ->where('id_user', $user->id)
             ->first();
 
         if (! $booking) {

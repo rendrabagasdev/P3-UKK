@@ -6,7 +6,7 @@ void main() {
   group('User Model Tests', () {
     test('User model can be created from JSON', () {
       final Map<String, dynamic> json = {
-        'id_user': 1,
+        'id': 1, // Changed from 'id_user' to 'id'
         'username': 'testuser',
         'role': 1,
         'created_at': '2023-01-01 00:00:00',
@@ -29,10 +29,9 @@ void main() {
 
       final json = user.toJson();
 
-      expect(json['id'], 1);
-      expect(json['name'], 'Test User');
-      expect(json['email'], 'test@example.com');
-      expect(json['role'], 'user');
+      expect(json['id'], 1); // Changed from 'id_user' to 'id'
+      expect(json['username'], 'testuser');
+      expect(json['role'], 1);
     });
   });
 }

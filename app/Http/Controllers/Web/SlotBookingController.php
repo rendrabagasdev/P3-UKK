@@ -17,7 +17,7 @@ class SlotBookingController extends Controller
         $rooms = Room::all();
         $counts = ['proses'=>0,'diterima'=>0,'ditolak'=>0];
         if (Auth::check()) {
-            $userId = Auth::user()->id_user;
+            $userId = Auth::user()->id;
             $agg = Booking::selectRaw('status, COUNT(*) as total')
                 ->where('id_user', $userId)
                 ->groupBy('status')->pluck('total','status');
@@ -68,13 +68,13 @@ class SlotBookingController extends Controller
             if ($petugasUser) {
                 $petugas = \App\Models\Petugas::create([
                     'nama_petugas' => $petugasUser->username,
-                    'id_user' => $petugasUser->id_user,
+                    'id_user' => $petugasUser->id,
                 ]);
             }
         }
 
         // Dapatkan ID user yang sedang login
-        $userId = Auth::user()->id_user;
+        $userId = Auth::user()->id;
 
         $booking = Booking::create([
             'id_user' => $userId,
@@ -276,7 +276,7 @@ class SlotBookingController extends Controller
         // Hanya pemilik booking (role user) yang boleh melihat, kecuali admin/petugas
         $user = Auth::user();
         if (in_array($user->role, [3])) { // 3 = user biasa (asumsi)
-            if ($booking->id_user !== $user->id_user) {
+            if ($booking->id !== $user->id) {
                 abort(404);
             }
         }
@@ -307,7 +307,7 @@ class SlotBookingController extends Controller
         $booking = Booking::with('room')->findOrFail($id);
         $user = Auth::user();
         if (in_array($user->role, [3])) {
-            if ($booking->id_user !== $user->id_user) {
+            if ($booking->id !== $user->id) {
                 abort(404);
             }
         }

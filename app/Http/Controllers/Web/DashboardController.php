@@ -13,9 +13,9 @@ class DashboardController extends Controller
         
         // Dashboard untuk pengguna biasa (role 3)
         if ($user->role == 3) {
-            $myBookings = \App\Models\Booking::where('id_user', $user->id_user)->count();
-            $pendingBookings = \App\Models\Booking::where('id_user', $user->id_user)->where('status', 'proses')->count();
-            $approvedBookings = \App\Models\Booking::where('id_user', $user->id_user)->where('status', 'diterima')->count();
+            $myBookings = \App\Models\Booking::where('id_user', $user->id)->count();
+            $pendingBookings = \App\Models\Booking::where('id_user', $user->id)->where('status', 'proses')->count();
+            $approvedBookings = \App\Models\Booking::where('id_user', $user->id)->where('status', 'diterima')->count();
             $totalRooms = \App\Models\Room::count();
             
             return view('dashboard.user', compact('myBookings', 'pendingBookings', 'approvedBookings', 'totalRooms'));
@@ -23,7 +23,7 @@ class DashboardController extends Controller
         
         // Dashboard untuk petugas (role 2)
         if ($user->role == 2) {
-            $petugas = \App\Models\Petugas::where('id_user', $user->id_user)->first();
+            $petugas = \App\Models\Petugas::where('id_user', $user->id)->first();
             $assignedId = $petugas->id_petugas ?? null;
 
             $pendingBookings = $assignedId ? \App\Models\Booking::where('id_petugas', $assignedId)->where('status', 'proses')->count() : 0;

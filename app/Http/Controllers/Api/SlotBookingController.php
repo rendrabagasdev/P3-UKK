@@ -85,13 +85,13 @@ class SlotBookingController extends Controller
             if ($petugasUser) {
                 $petugas = \App\Models\Petugas::create([
                     'nama_petugas' => $petugasUser->username,
-                    'id_user' => $petugasUser->id_user,
+                    'id_user' => $petugasUser->id,
                 ]);
             }
         }
 
         $booking = Booking::create([
-            'id_user' => optional(Auth::user())->id_user,
+            'id_user' => optional(Auth::user())->id,
             'id_room' => $request->id_room,
             'id_petugas' => $petugas->id_petugas,
             'tipe_booking' => 'hourly',
@@ -112,7 +112,7 @@ class SlotBookingController extends Controller
 
     public function myBookings(): JsonResponse
     {
-        $bookings = Booking::where('id_user', optional(Auth::user())->id_user)
+        $bookings = Booking::where('id_user', optional(Auth::user())->id)
             ->with('room')
             ->orderBy('created_at', 'desc')
             ->get()

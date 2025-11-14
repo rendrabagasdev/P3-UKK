@@ -40,7 +40,7 @@ class UserBookingController extends BaseController
         $sampai = $request->query('sampai');
 
         $query = Booking::with('room')
-            ->where('id_user', $user->id_user)
+            ->where('id_user', $user->id)
             ->orderByDesc('tanggal_mulai');
         if ($status && in_array($status, ['proses','diterima','ditolak'])) {
             $query->where('status', $status);
@@ -138,7 +138,7 @@ class UserBookingController extends BaseController
             if ($petugasUser) {
                 $petugas = \App\Models\Petugas::create([
                     'nama_petugas' => $petugasUser->username,
-                    'id_user' => $petugasUser->id_user,
+                    'id_user' => $petugasUser->id,
                 ]);
             }
         }
@@ -149,7 +149,7 @@ class UserBookingController extends BaseController
         }
 
         $booking = Booking::create([
-            'id_user' => $user->id_user,
+            'id_user' => $user->id,
             'id_petugas' => $petugas->id_petugas,
             'id_room' => $request->id_room,
             'tipe_booking' => $request->tipe_booking,
@@ -176,7 +176,7 @@ class UserBookingController extends BaseController
         }
         
         $user = Auth::user();
-        $booking = Booking::where('id_booking', $id)->where('id_user', $user->id_user)->first();
+        $booking = Booking::where('id_booking', $id)->where('id_user', $user->id)->first();
         
         if (!$booking) {
             return redirect()->route('user.slot-booking.index')->with('error', 'Peminjaman tidak ditemukan.');
