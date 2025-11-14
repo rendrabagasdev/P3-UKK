@@ -17,37 +17,51 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Ensure core accounts have the expected credentials
-        $this->call([
-            FixPasswordsSeeder::class,
-        ]);
+        // Create or update core users with correct credentials
+        $adminUser = User::firstOrCreate(
+            ['username' => 'admin'],
+            [
+                'nama' => 'Administrator',
+                'email' => 'admin@example.com',
+                'password' => Hash::make('admin123'),
+                'role' => 1,
+            ]
+        );
+        $adminUser->password = Hash::make('admin123');
+        $adminUser->save();
 
-        // Create Admin User
-        $adminUser = User::create([
-            'username' => 'admin',
-            'password' => Hash::make('admin123'),
-            'role' => 1, // Admin role
-        ]);
+        $petugasUser = User::firstOrCreate(
+            ['username' => 'petugas'],
+            [
+                'nama' => 'Petugas',
+                'email' => 'petugas@example.com',
+                'password' => Hash::make('petugas123'),
+                'role' => 2,
+            ]
+        );
+        $petugasUser->password = Hash::make('petugas123');
+        $petugasUser->save();
 
-        // Create Petugas User
-        $petugasUser = User::create([
-            'username' => 'petugas',
-            'password' => Hash::make('petugas123'),
-            'role' => 2, // Petugas role
-        ]);
+        $regularUser = User::firstOrCreate(
+            ['username' => 'user'],
+            [
+                'nama' => 'User',
+                'email' => 'user@example.com',
+                'password' => Hash::make('user123'),
+                'role' => 3,
+            ]
+        );
+        $regularUser->password = Hash::make('user123');
+        $regularUser->save();
 
-        // Create Regular User
-        $regularUser = User::create([
-            'username' => 'user',
-            'password' => Hash::make('user123'),
-            'role' => 3, // User role
-        ]);
-
-        // Create Petugas
-        $petugas = Petugas::create([
-            'nama_petugas' => 'Petugas Satu',
-            'id_user' => $petugasUser->id_user,
-        ]);
+        // Create Petugas record if not exists
+        $petugas = Petugas::firstOrCreate(
+            ['id_user' => $petugasUser->id_user],
+            [
+                'nama_petugas' => 'Petugas Satu',
+                'no_hp' => '08123456789',
+            ]
+        );
 
         // Create Rooms
         $room1 = Room::firstOrCreate([
