@@ -1,0 +1,35 @@
+# The .metadata file format is used by Flutter tools to track the source and
+# dependencies of the Flutter application. This file should be checked into
+# version control along with your project.
+
+version:
+  revision: "efbf63d9c66b9f6ec30e9a0ca3b8599d3020b921"
+  channel: "stable"
+
+project_type: app
+
+# Tracks metadata for the flutter migrate command
+migration:
+  platforms:
+    - platform: root
+      create_revision: efbf63d9c66b9f6ec30e9a0ca3b8599d3020b921
+      base_revision: efbf63d9c66b9f6ec30e9a0ca3b8599d3020b921
+    - platform: android
+      create_revision: efbf63d9c66b9f6ec30e9a0ca3b8599d3020b921
+      base_revision: efbf63d9c66b9f6ec30e9a0ca3b8599d3020b921
+    - platform: ios
+      create_revision: efbf63d9c66b9f6ec30e9a0ca3b8599d3020b921
+      base_revision: efbf63d9c66b9f6ec30e9a0ca3b8599d3020b921
+    - platform: web
+      create_revision: efbf63d9c66b9f6ec30e9a0ca3b8599d3020b921
+      base_revision: efbf63d9c66b9f6ec30e9a0ca3b8599d3020b921
+
+  # User provided section
+
+  # List of Local paths (relative to this file) that should be
+  # ignored by the migrate tool.
+  #
+  # Files that are not part of the templates will be ignored by default.
+  unmanaged_files:
+    - 'lib/main.dart'
+    - 'ios/Runner.xcodeproj/project.pbxproj'
