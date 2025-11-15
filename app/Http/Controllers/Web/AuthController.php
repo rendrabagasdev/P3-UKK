@@ -41,7 +41,17 @@ class AuthController extends Controller
         ];
         
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
+            $user = Auth::user();
+            
+            // Hapus token lama
+            $user->tokens()->delete();
+            
+            // Buat token baru dengan Sanctum
+            $token = $user->createToken('web-token')->plainTextToken;
+            
+            // Simpan token di cookie yang secure
+            cookie()->queue('auth_token', $token, 60 * 24 * 7, '/', null, true, true); // 7 hari
+            
             return redirect()->intended('dashboard');
         }
 
@@ -92,9 +102,17 @@ class AuthController extends Controller
             'path' => $request->path(),
             'method' => $request->method(),
         ]);
+        
+        // Hapus semua token user
+        if (Auth::check()) {
+            Auth::user()->tokens()->delete();
+        }
+        
         Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        
+        // Hapus cookie token
+        cookie()->queue(cookie()->forget('auth_token'));
+        
         return redirect('/');
     }
 }
